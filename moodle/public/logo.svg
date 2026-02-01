@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="118" height="118" viewBox="0 0 118 118">
+  <!-- background -->
+  <rect x="0" y="0" width="118" height="118" rx="22" ry="22" fill="#F98012"/>
+
+  <!-- white "m" -->
+  <text
+    x="59" y="79"
+    text-anchor="middle"
+    font-family="Arial, Helvetica, sans-serif"
+    font-size="92"
+    font-weight="700"
+    fill="#FFFFFF"
+    letter-spacing="-2"
+  >m</text>
+</svg>

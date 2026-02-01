@@ -33,10 +33,13 @@ def moodle_call(wsfunction: str, params: dict):
         raise MoodleError(str(e))
 
     # Moodle WS standard error handling
-    if isinstance(data, dict) and data.get("exception"):
-        msg = data.get("message") or data.get("errorcode") or "Unknown Moodle WS error"
-        frappe.log_error(f"{wsfunction} -> {data}", "Moodle WS exception")
-        raise MoodleError(msg)
+    if isinstance(data, dict):
+        if data.get("exception"):
+            msg = data.get("message") or data.get("errorcode") or "Unknown Moodle WS error"
+            frappe.log_error(f"{wsfunction} -> {data}", "Moodle WS exception")
+            # Explicitly log the Moodle exception to finding it in Error Log
+            print(f"Moodle Error: {msg}")
+            raise MoodleError(f"Moodle API {wsfunction} failed: {msg}")
 
     return data
 
@@ -84,7 +87,15 @@ def get_or_create_moodle_userid(frappe_user_email: str) -> int:
     return moodle_userid
 
 def get_user_courses(moodle_userid: int):
-    return moodle_call("core_enrol_get_users_courses", {"userid": moodle_userid})
+    courses = moodle_call("core_enrol_get_users_courses", {"userid": moodle_userid})
+    if isinstance(courses, list):
+         # Inject viewurl manually
+         s = _get_settings()
+         base_url = s.moodle_base_url.rstrip('/')
+         for c in courses:
+             if "id" in c:
+                 c["viewurl"] = f"{base_url}/course/view.php?id={c['id']}"
+    return courses
 
 def get_assignments_for_courses(course_ids: list[int]):
     # mod_assign_get_assignments often accepts courseids[0]=... format

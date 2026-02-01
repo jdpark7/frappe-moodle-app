@@ -5,28 +5,34 @@ app_description = "Moodle Integartion"
 app_email = "jdpark7@gmail.com"
 app_license = "mit"
 
+# Force load dashboard API to register whitelist
+try:
+    import moodle.moodle.api.dashboard
+except Exception:
+    pass
+
 # Apps
 # ------------------
 
-required_apps = ["education"]
+# required_apps = ["education"]
 
 # Each item in the list will be shown as an app in the apps page
-# add_to_apps_screen = [
-# 	{
-# 		"name": "moodle",
-# 		"logo": "/assets/moodle/logo.png",
-# 		"title": "Moodle",
-# 		"route": "/moodle",
-# 		"has_permission": "moodle.api.permission.has_app_permission"
-# 	}
-# ]
+add_to_apps_screen = [
+	{
+		"name": "moodle",
+		"logo": "/assets/moodle/logo.svg",
+		"title": "Moodle",
+		"route": "/app/moodle",
+		# "has_permission": "moodle.api.permission.has_app_permission"
+	}
+]
 
 # Includes in <head>
 # ------------------
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/moodle/css/moodle.css"
-# app_include_js = "/assets/moodle/js/moodle.js"
+app_include_js = "/assets/moodle/js/moodle_workspace.js"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/moodle/css/moodle.css"

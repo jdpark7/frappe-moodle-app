@@ -1,0 +1,41 @@
+{
+    "charts": [],
+    "content": "[{\"type\":\"card\",\"data\":{\"card_name\":\"Moodle Management\",\"col\":4}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Moodle Settings\",\"col\":3}}]",
+    "customization": 0,
+    "docstatus": 0,
+    "doctype": "Workspace",
+    "for_user": "",
+    "hide_custom": 0,
+    "icon": "education",
+    "is_hidden": 0,
+    "label": "Moodle",
+    "links": [
+        {
+            "label": "Moodle Management",
+            "link_count": 0,
+            "link_type": "DocType",
+            "link_to": "Moodle Settings",
+            "onboard": 0,
+            "type": "Link"
+        }
+    ],
+    "module": "Moodle",
+    "name": "Moodle",
+    "number_cards": [],
+    "parent_page": "",
+    "public": 1,
+    "roles": [],
+    "sequence_id": 1,
+    "shortcuts": [
+        {
+            "docstatus": 0,
+            "doctype": "Workspace Shortcut",
+            "format": "",
+            "label": "Moodle Settings",
+            "link_to": "Moodle Settings",
+            "stats_filter": "[]",
+            "type": "DocType"
+        }
+    ],
+    "title": "Moodle"
+}
