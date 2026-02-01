@@ -106,7 +106,7 @@ window.create_moodle_account_dialog = function () {
                 args: { password: values.password },
                 callback: function (r) {
                     if (r.message && r.message.success) {
-                        frappe.msgprint("Account Created! Password: " + values.password);
+                        frappe.msgprint("Account Created! Please log in with the password you just set.");
                         d.hide();
                         render_moodle_dashboard(); // Refresh
                     } else {

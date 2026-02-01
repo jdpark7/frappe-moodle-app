@@ -82,7 +82,8 @@
                     if (r.message && r.message.success) {
                         msg.classList.remove("text-danger");
                         msg.classList.add("text-success");
-                        msg.innerHTML = "Success! Account Created.<br><strong>Your Moodle Password: " + password + "</strong><br>Please use this password to log in.";
+                        msg.innerHTML = "Success! Account created.<br>Please log in using the password you just set.";
+                        passwordField.value = "";
 
                         btn.style.display = "none";
                         passwordField.parentElement.style.display = "none";
