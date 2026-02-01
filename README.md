@@ -58,15 +58,19 @@ Depending on features used:
 ## Installation (Frappe Bench)
 
 ### 1) Clone the app
-
+```bash
 cd /path/to/frappe-bench/apps
-git clone https://github.com/jdpark7/frappe-moodle-app.git moodle
+git clone https://github.com/jdpark7/frappe-moodle-app.git moodle 
+```
 ---
 ###  2) Install the app on your site
+```bash
 cd /path/to/frappe-bench
 bench --site [your-site-name] install-app moodle
-
+```
 ### 3) Run migrations and build assets
+```bash
 bench --site [your-site-name] migrate
 bench build
 bench restart
+```
