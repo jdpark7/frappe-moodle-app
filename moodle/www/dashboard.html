@@ -1,0 +1,122 @@
+{% extends "templates/web.html" %}
+
+{% block page_content %}
+<div class="container my-5">
+    <h1>My Moodle Dashboard</h1>
+    <p class="lead">Welcome to your Learning Management System integration.</p>
+
+    {% if error %}
+    <div class="alert alert-danger">
+        {{ error }}
+    </div>
+    {% endif %}
+
+    {% if courses %}
+    <div class="row">
+        {% for course in courses %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ course.fullname }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ course.shortname }}</h6>
+                    <p class="card-text">
+                        {% if course.progress %}
+                        Progress: {{ course.progress }}%
+                        {% endif %}
+                    </p>
+                    <a href="{{ course.viewurl }}" class="btn btn-primary" target="_blank">Go to Course</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    {% if found_moodle_user %}
+    <div class="alert alert-warning">
+        <h4>Connected as {{ found_moodle_user.fullname }}</h4>
+        <p>We found your Moodle account (ID: {{ found_moodle_user.id }}), but you are not enrolled in any courses.</p>
+        <a href="{{ moodle_url }}" class="btn btn-primary mt-2" target="_blank">Go to Moodle Site</a>
+    </div>
+    {% elif account_warning %}
+    <div class="alert alert-warning">
+        <h4>Account Not Linked</h4>
+        <p>{{ account_warning }}</p>
+        <p>Please ensure your email in Frappe ({{ user_email }}) matches your Moodle account email.</p>
+        <hr>
+        <p>If you do not have a Moodle account, you can create one now:</p>
+        <div class="mt-3" style="max-width: 300px;">
+            <div class="form-group">
+                <label for="moodle-password">Set Moodle Password</label>
+                <input type="password" id="moodle-password" class="form-control" placeholder="Enter your password">
+                <small class="form-text text-muted">Enter a password for your new Moodle account.</small>
+            </div>
+            <button id="btn-create-account" class="btn btn-success mt-2">Create Moodle Account</button>
+            <div id="create-msg" class="mt-2 font-weight-bold"></div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("btn-create-account").addEventListener("click", function () {
+            var btn = this;
+            var msg = document.getElementById("create-msg");
+            var passwordField = document.getElementById("moodle-password");
+            var password = passwordField.value;
+
+            if (!password) {
+                msg.className = "text-danger mt-2 font-weight-bold";
+                msg.innerText = "Please enter a password.";
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerText = "Creating...";
+            msg.innerText = "";
+            msg.className = "mt-2 font-weight-bold";
+
+            frappe.call({
+                method: "moodle.www.dashboard.create_account",
+                args: {
+                    "password": password
+                },
+                callback: function (r) {
+                    if (r.message && r.message.success) {
+                        msg.classList.remove("text-danger");
+                        msg.classList.add("text-success");
+                        msg.innerHTML = "Success! Account Created.<br><strong>Your Moodle Password: " + password + "</strong><br>Please use this password to log in.";
+
+                        btn.style.display = "none";
+                        passwordField.parentElement.style.display = "none";
+
+                        var loginBtn = document.createElement("a");
+                        var moodleUrl = "{{ moodle_url }}";
+                        // Default to login page
+                        if (moodleUrl.endsWith("/")) {
+                            moodleUrl = moodleUrl.slice(0, -1);
+                        }
+
+                        loginBtn.href = moodleUrl + "/login/index.php";
+                        loginBtn.target = "_blank";
+                        loginBtn.className = "btn btn-primary mt-2";
+                        loginBtn.innerText = "Go to Moodle Login";
+
+                        msg.appendChild(document.createElement("br"));
+                        msg.appendChild(loginBtn);
+
+                    } else {
+                        btn.disabled = false;
+                        btn.innerText = "Create Moodle Account";
+                        msg.classList.add("text-danger");
+                        msg.innerText = "Error: " + (r.message ? r.message.message : "Unknown error");
+                    }
+                }
+            });
+        });
+    </script>
+    {% else %}
+    <div class="alert alert-info">
+        Checking connection...
+    </div>
+    {% endif %}
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,73 @@
+{
+    "actions": [],
+    "allow_rename": 1,
+    "creation": "2025-01-31 16:30:17.399672",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "moodle_base_url",
+        "rest_endpoint",
+        "service_token",
+        "cache_ttl_seconds",
+        "timeout_seconds",
+        "enabled"
+    ],
+    "fields": [
+        {
+            "fieldname": "moodle_base_url",
+            "fieldtype": "Data",
+            "label": "Moodle Base URL",
+            "reqd": 1,
+            "default": "http://localhost:80"
+        },
+        {
+            "fieldname": "rest_endpoint",
+            "fieldtype": "Data",
+            "label": "REST Endpoint",
+            "default": "/webservice/rest/server.php"
+        },
+        {
+            "fieldname": "service_token",
+            "fieldtype": "Password",
+            "label": "Service Token",
+            "reqd": 1
+        },
+        {
+            "fieldname": "cache_ttl_seconds",
+            "fieldtype": "Int",
+            "label": "Cache TTL (Seconds)",
+            "default": "600"
+        },
+        {
+            "fieldname": "timeout_seconds",
+            "fieldtype": "Int",
+            "label": "Timeout (Seconds)",
+            "default": "10"
+        },
+        {
+            "fieldname": "enabled",
+            "fieldtype": "Check",
+            "label": "Enabled",
+            "default": "1"
+        }
+    ],
+    "issingle": 1,
+    "module": "Moodle",
+    "name": "Moodle Settings",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "print": 1,
+            "read": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        }
+    ],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "track_changes": 1
+}
